@@ -1,0 +1,47 @@
+html,
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#markdown-editor-div {
+    width: calc(100% - 32px);
+    height: calc(100% - 32px);
+    padding: 16px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+#markdown-editor-div1 {
+    flex: 0 0 auto;
+    height: 32px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#markdown-editor-div2 {
+    flex: 1 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+#markdown-editor-ace {
+    flex: 1 0 48%;
+    border: 1px solid #ccc;
+}
+
+#markdown-editor-preview {
+    flex: 1 0 48%;
+    margin-left: 8px;
+    border: 1px solid #ccc;
+    padding-left: 16px;
+}
+
+#markdown-editor-preview-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}

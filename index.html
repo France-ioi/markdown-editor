@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Markdown Editor</title>
+    <script src="dist/markdown-editor.js"></script>
+</head>
+<body>
+    <div id="markdown-editor-div">
+        <div id="markdown-editor-div1">
+            <div id="markdown-editor-div1-left">
+                <span id="markdown-editor-status"></span>
+                <span id="markdown-editor-modified"></span>
+                <span id="markdown-editor-warning"></span>
+            </div>
+            <div id="markdown-editor-div1-right">
+                <button id="markdown-editor-save" onclick="mdeditor.saveFile()" disabled>Save</button>
+                <button id="markdown-editor-revert" onclick="mdeditor.revertFile()" disabled>Revert</button>
+            </div>
+        </div>
+        <div id="markdown-editor-div2">
+            <div id="markdown-editor-ace"></div>
+            <div id="markdown-editor-preview">
+                <iframe id="markdown-editor-preview-iframe"></iframe>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var editor = mdeditor.initEditor();
+    </script>
+</body>

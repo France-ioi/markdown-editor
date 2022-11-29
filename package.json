@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "build": "webpack build --mode production --progress",
+    "watch": "webpack --watch --progress"
+  },
+  "dependencies": {
+    "ace-builds": "^1.13.1",
+    "markdown-compiler": "https://github.com/France-ioi/markdown-compiler",
+    "mime": "^3.0.0"
+  }
+}
