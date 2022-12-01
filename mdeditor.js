@@ -146,15 +146,15 @@ function makeFileSelector() {
     });
 }
 
-function initEditionSession() {
+function initEditionSession(options) {
     var urlsp = new URLSearchParams(window.location.search);
     var token = urlsp.get('token');
     var sessionId = urlsp.get('session');
 
     if (token && sessionId) {
-        setupEditionApi('https://svnimport.mblockelet.info/edition/', token, sessionId);
-    } else {
-        setupEditionApi('https://svnimport.mblockelet.info/edition/', 'testtoken', 'testmarkdown');
+        setupEditionApi(options.apiBaseUrl, token, sessionId);
+    } else if (options.testToken && options.testSession) {
+        setupEditionApi(options.apiBaseUrl, options.testToken, options.testSession);
         document.getElementById('markdown-editor-warning').innerHTML = ' <b style="color: red;">(using test token)</b>';
     }
     refreshFileList((list) => {
@@ -170,11 +170,11 @@ function initEditionSession() {
     });
 }
 
-export function initEditor() {
+export function initEditor(options) {
     initIframe();
     initAceEditor();
     initJschannel();
-    initEditionSession();
+    initEditionSession(options);
 }
 
 export function saveFile(callback) {

@@ -25,6 +25,10 @@
         </div>
     </div>
     <script type="text/javascript">
-        var editor = mdeditor.initEditor();
+        var editor = mdeditor.initEditor({
+            apiBaseUrl: 'https://example.com/edition/',
+            testToken: '',
+            testSession: ''
+        });
     </script>
 </body>
