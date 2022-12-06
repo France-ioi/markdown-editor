@@ -147,14 +147,17 @@ function makeFileSelector() {
 }
 
 function initEditionSession(options) {
-    var urlsp = new URLSearchParams(window.location.search);
-    var token = urlsp.get('token');
-    var sessionId = urlsp.get('session');
+    const urlsp = new URLSearchParams(window.location.search);
+    const token = urlsp.get('token');
+    const sessionId = urlsp.get('session');
+    const api = urlsp.get('api');
+    const filename = urlsp.get('filename');
+    const apiBaseUrl = api ? api : options.apiBaseUrl;
 
     if (token && sessionId) {
-        setupEditionApi(options.apiBaseUrl, token, sessionId);
+        setupEditionApi(apiBaseUrl, token, sessionId);
     } else if (options.testToken && options.testSession) {
-        setupEditionApi(options.apiBaseUrl, options.testToken, options.testSession);
+        setupEditionApi(apiBaseUrl, options.testToken, options.testSession);
         document.getElementById('markdown-editor-warning').innerHTML = ' <b style="color: red;">(using test token)</b>';
     }
     refreshFileList((list) => {
@@ -165,7 +168,11 @@ function initEditionSession(options) {
             loadFile(markdownFiles[0]);
         } else {
             makeFileSelector();
-            loadFile(markdownFiles[0]);
+            if (filename && markdownFiles.includes(filename)) {
+                loadFile(filename);
+            } else {
+                loadFile(markdownFiles[0]);
+            }
         }
     });
 }
