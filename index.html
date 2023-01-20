@@ -13,6 +13,8 @@
                 <span id="markdown-editor-warning"></span>
             </div>
             <div id="markdown-editor-div1-right">
+                <input type="text" id="markdown-editor-filename" placeholder="Filename" style="display: none;" />
+                <button id="markdown-editor-newfile" onclick="mdeditor.newFile()">New file</button>
                 <button id="markdown-editor-save" onclick="mdeditor.saveFile()" disabled>Save</button>
                 <button id="markdown-editor-revert" onclick="mdeditor.revertFile()" disabled>Revert</button>
             </div>
@@ -27,9 +29,9 @@
     <script type="text/javascript">
         // These defaults can be overriden by GET parameters
         var editor = mdeditor.initEditor({
-            apiBaseUrl: 'https://example.com/edition/',
-            testToken: '',
-            testSession: ''
+            apiBaseUrl: 'https://svnimport.france-ioi.org/edition/',
+            testToken: 'testtoken',
+            testSession: 'testmarkdown'
         });
     </script>
 </body>

@@ -8,6 +8,8 @@ import './style.css';
 
 var editor = null;
 var originalText = '';
+var editorIsModified = false;
+var editorIsCreatingNewFile = false;
 
 function processImage(image) {
     var src = image.getAttribute('src');
@@ -48,6 +50,7 @@ function setModified(isModified) {
     document.getElementById('markdown-editor-save').disabled = !isModified;
     document.getElementById('markdown-editor-revert').disabled = !isModified;
     document.getElementById('markdown-editor-modified').innerHTML = isModified ? '<b>(modified)</b>' : '';
+    editorIsModified = isModified;
 }
 
 function initIframe() {
@@ -105,13 +108,18 @@ function setCurFile(filename) {
     }
 }
 
+function loadedFile(filename, text) {
+    originalText = text;
+    editor.getSession().setValue(text);
+    editor.getSession().setUndoManager(new ace.UndoManager());
+    setCurFile(filename);
+    setModified(false);
+}
+
 function loadFile(filename) {
     curFile = filename;
     getFileContent(filename, (text) => {
-        originalText = text;
-        editor.getSession().setValue(text);
-        editor.getSession().setUndoManager(new ace.UndoManager());
-        setCurFile(filename);
+        loadedFile(filename, text);
     });
 }
 
@@ -182,6 +190,28 @@ export function initEditor(options) {
     initAceEditor();
     initJschannel();
     initEditionSession(options);
+}
+
+export function newFile() {
+    if (editorIsCreatingNewFile) {
+        if (editorIsModified && !confirm('Discard changes ?')) {
+            return;
+        }
+        editorIsCreatingNewFile = false;
+        curFile = document.getElementById('markdown-editor-filename').value;
+        if (!curFile.endsWith('.md')) {
+            curFile += '.md';
+        }
+        document.getElementById('markdown-editor-filename').value = '';
+        document.getElementById('markdown-editor-filename').style = 'display: none;';
+        document.getElementById('markdown-editor-newfile').innerHTML = 'New file';
+        loadedFile(curFile, '');
+    } else {
+        editorIsCreatingNewFile = true;
+        document.getElementById('markdown-editor-filename').style = '';
+        document.getElementById('markdown-editor-filename').focus();
+        document.getElementById('markdown-editor-newfile').innerHTML = 'Create file';
+    }
 }
 
 export function saveFile(callback) {
