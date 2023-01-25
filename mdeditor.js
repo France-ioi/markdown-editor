@@ -76,7 +76,7 @@ function initJschannel() {
         origin: "*",
         scope: "editor",
         onReady: function () {
-            document.getElementById('markdown-editor-save').hidden = true;
+            document.getElementById('markdown-editor-div1-right').hidden = true;
         }
     });
     channel.bind('save', () => {
