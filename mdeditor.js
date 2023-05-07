@@ -10,6 +10,7 @@ var editor = null;
 var originalText = '';
 var editorIsModified = false;
 var editorIsCreatingNewFile = false;
+var markdownVariables = {};
 
 function processImage(image) {
     var src = image.getAttribute('src');
@@ -36,7 +37,7 @@ function processImages(element) {
 function onEditorChange() {
     var mdText = editor.getSession().getValue();
     var mdData = parseHeader(mdText);
-    var html = compileMarkdown(mdData.body);
+    var html = compileMarkdown(mdData.body, markdownVariables);
     if (mdData.headers.title) {
         html = '<h1>' + mdData.headers.title + '</h1>' + html;
     }
@@ -181,6 +182,17 @@ function initEditionSession(options) {
             } else {
                 loadFile(markdownFiles[0]);
             }
+        }
+        markdownVariables = {};
+        if (list.includes('variables.json')) {
+            getFileContent('variables.json', (text) => {
+                try {
+                    markdownVariables = JSON.parse(text);
+                } catch (e) {
+                    console.error('variables.json was not a valid JSON file');
+                    console.error(e);
+                }
+            });
         }
     });
 }
