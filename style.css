@@ -6,10 +6,9 @@ body {
 }
 
 #markdown-editor-div {
-    width: calc(100% - 32px);
+    width: 100%;
     height: calc(100% - 32px);
-    padding: 16px;
-    margin: auto;
+    padding: 16px 0px;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
