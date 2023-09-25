@@ -138,7 +138,11 @@ function selectFile(filename) {
     }
 }
 
-function makeFileSelector() {
+function makeFileSelector(hidden) {
+    document.getElementById('markdown-editor-div1-left').hidden = !!hidden;
+    if (hidden) {
+        return;
+    }
     var select = document.createElement('select');
     var status = document.getElementById('markdown-editor-status');
     select.id = 'markdown-editor-select';
@@ -176,10 +180,11 @@ function initEditionSession(options) {
         } else if (markdownFiles.length == 1) {
             loadFile(markdownFiles[0]);
         } else {
-            makeFileSelector();
             if (filename && markdownFiles.includes(filename)) {
+                makeFileSelector(true);
                 loadFile(filename);
             } else {
+                makeFileSelector();
                 loadFile(markdownFiles[0]);
             }
         }
